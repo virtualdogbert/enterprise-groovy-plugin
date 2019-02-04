@@ -1,0 +1,215 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'groovy'
+    id 'maven-publish'
+    id "com.jfrog.bintray" version "1.8.4"
+    id "org.asciidoctor.gradle.asciidoctor" version "1.5.1"
+}
+
+group = 'com.virtualdogbert'
+version = '1.0.RC1'
+description = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
+
+configurations {
+    consolePlugin
+}
+
+wrapper {
+    gradleVersion = '4.10.2'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+dependencies {
+    compile gradleApi()
+}
+
+sourceSets {
+    main.groovy.srcDir 'src'
+    main.resources {
+        srcDirs = ['src/main/resources']
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier "sources"
+}
+
+ext {
+    theTitle = 'Enterprise Groovy Plugin'
+    titleForDocumentation = archivesBaseName + ' ' + version
+    packageTitle = group
+    description = description
+}
+
+task jarDoc(type: Jar, dependsOn: [javadoc, groovydoc]) {
+    classifier = 'javadoc'
+    from docsDir
+}
+
+javadoc {
+    options.overview('overview.html')
+    options.showAll()
+    options.encoding('UTF-8')
+    options.setUse(true)
+    options.author(true)
+    options.version(true)
+    options.windowTitle("Enterprise Groovy Plugin")
+    options.docTitle(titleForDocumentation)
+    doFirst {
+        javadoc.title = titleForDocumentation
+        javadoc.options.docTitle = javadoc.title
+    }
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    tasks.withType(Javadoc) {
+        // disable the crazy super-strict doclint tool in Java 8
+        //noinspection SpellCheckingInspection
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+groovydoc {
+    dependsOn(classes)
+    includePrivate = true
+    use = true
+    windowTitle = packageTitle
+    docTitle = packageTitle
+    header = packageTitle
+    include 'com/virtualdogbert/**'
+}
+
+
+
+publishing {
+    publications {
+        groovyMaven(MavenPublication) {
+            from components.java
+
+            artifact(sourceJar) {
+                classifier "sources"
+            }
+
+            artifact jarDoc {
+                classifier = 'javadoc'
+            }
+        }
+
+
+    }
+}
+
+task jarSrc(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives(jarSrc)
+    archives(jarDoc)
+}
+
+
+String getPropertyOrUseDefault(String propertyName, String defaultValue) {
+    hasProperty(propertyName) ? getProperty(propertyName) : defaultValue
+}
+
+bintray {
+    user = getPropertyOrUseDefault("bintrayUser", "fake_user")
+    key = getPropertyOrUseDefault("bintrayKey", "fake_key")
+    publications = ['groovyMaven']
+
+    def projectName = project.name
+    def projectDescription = project.description
+
+    pkg {
+        repo = 'maven'
+        name = 'enterprise-groovy-plugin'
+        userOrg = getPropertyOrUseDefault("bintrayUser", "fake_user")
+        desc = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
+        licenses = ['Apache-2.0']
+        labels = ['gradle', 'plugin', 'groovy', 'enterprise', 'compileStatic', 'static compiliation', 'static']
+        websiteUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin'
+        issueTrackerUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin/issues'
+        vcsUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin.git'
+        publicDownloadNumbers = true
+    }
+}
+gradlePlugin {
+    plugins {
+        enterpriseGroovyPlugin {
+            id = 'enterprise.groovy.plugin'
+            displayName = 'Enterprise Groovy Plugin'
+            description = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
+            implementationClass = 'com.virtualdogbert.EnterpriseGroovyPlugin'
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/virtualdogbert/enterprise=groovy-plugin'
+    vcsUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin.git'
+    tags = ['groovy', 'enterprise', 'compileStatic', 'static compiliation', 'static']
+}
+
+def asciidoctorAttributes = [
+        copyright           : 'Apache License, Version 2.0',
+        docinfo1            : 'true',
+        doctype             : 'book',
+        encoding            : 'utf-8',
+        icons               : 'font',
+        id                  : project.name + ':' + project.version,
+        idprefix            : '',
+        idseparator         : '-',
+        lang                : 'en',
+        linkattrs           : true,
+        numbered            : '',
+        producer            : 'Asciidoctor',
+        revnumber           : project.version,
+        setanchors          : true,
+        'source-highlighter': 'prettify',
+        toc                 : 'left',
+        toc2                : '',
+        toclevels           : '2'
+]
+
+import org.asciidoctor.gradle.AsciidoctorTask
+
+tasks.withType(AsciidoctorTask) {
+    attributes asciidoctorAttributes
+    outputDir new File(buildDir, 'docs')
+    separateOutputDirs = false
+    sourceDir = file('src/docs')
+    sources {
+        include 'index.adoc'
+    }
+}
+
+task asciidoc(type: AsciidoctorTask, description: 'Generates single-page HTML') {
+    backends 'html5'
+}
+
+task docs(dependsOn: [asciidoc]) {
+
+    File dir = new File(buildDir, 'docs')
+    ['pdf'].each { String ext ->
+        File f = new File(dir, 'index.' + ext)
+        if (f.exists()) {
+            f.renameTo new File(dir, project.name + '-' + project.version + '.' + ext)
+        }
+    }
+
+    copy {
+        from 'src/docs'
+        into new File(buildDir, 'docs').path
+        include '**/*.png'
+    }
+}
+

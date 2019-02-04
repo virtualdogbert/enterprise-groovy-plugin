@@ -1,0 +1,25 @@
+== Taking it a step further
+
+While with this plugin I could implement many rules, and you can do more with a custom compiler, the down
+side to that is you will end up with a potentially slower compilation. Also there Already exists a
+static checker called `Code Narc`:
+
+http://codenarc.sourceforge.ne[Code Narc website]
+
+Code Narc provides a framework for statically checking your, and has a vast library of rules that you
+can choose to enable or not. While I wouldn't suggest running this before every compile, because it would
+slow your compilation process down, it would be a good idea to hook this into your build process.
+
+Eric Helgeson wrote a good article on how to use Code Narc with Grails 3 using a Gradle Plugin:
+
+https://erichelgeson.github.io/blog/2016/04/21/codenarc-grails3/[CODENARC IN GRAILS 3]
+
+Jenn Strater also did a good talk during GR8Conf 2016:
+
+https://www.youtube.com/watch?v=3v18NB7pyCY[Codenarc Revisited]
+
+Combining the Enterprise Groovy plugin, and the Code Narc plugin, will give you a lot of control for
+enforcing, static compilation, and coding standards. This is not to say you should do code reviews,
+because that will make sure that individuals aren't changing the conventions.groovy/codenarc rules.
+If you want to be really enterprisy/restrictive, you could lock down your builds, and make them check
+that the conventions.groovy, hasn't been changed, using a hash or golden file.

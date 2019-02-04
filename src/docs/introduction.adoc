@@ -1,0 +1,5 @@
+== Introduction
+
+One of the biggest complaints about Groovy is that it's a dynamically compiled language, and that it's
+ optional static compilation feels bolted on. The Enterprise Groovy Plugin fixes, this by making static
+ compilation the default, and gives you a configuration for optional enforcement.

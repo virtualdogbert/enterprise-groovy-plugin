@@ -1,0 +1,29 @@
+== Getting Started
+
+1.  To get started install the Enterprise Groovy plugin, in your `build.grade`:
+[source,groovy]
+----
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {1"
+        classpath 'com.virtualdogbert:enterprise-groovy-plugin:1.0'
+    }
+}
+
+apply plugin: "enterprise.groovy.plugin"
+----
+2. Run some of the setup Gradle tasks `setupEnterpriseGroovyConventions` or `setupEnterpriseGroovyGrailsConventions`. This will provide
+you with a `conventions.groovy` file in the root of your project, that you can use to configure the
+Enterprise Groovy Plugin.
+
+
+=== Example applications
+
+Here is an example app with commented out code that will cause the build to fail, because of the static
+compilation, or rules set in the conventions.groovy:
+
+https://github.com/virtualdogbert/test-enterprise-groovy[GitHub test-enterprise-groovy]
+

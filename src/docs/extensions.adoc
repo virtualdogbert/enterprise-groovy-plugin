@@ -1,0 +1,4 @@
+== Extensions
+
+If you want to create your own type checking extensions check out the Groovy documentation here:
+http://docs.groovy-lang.org/2.5.4/html/documentation/type-checking-extensions.html#_writing_a_type_checking_extension[Type checking extensions]

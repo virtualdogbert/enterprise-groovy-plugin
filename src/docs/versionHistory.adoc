@@ -1,0 +1,3 @@
+== Version History
+* 1.0
+** Initial Release with compile static by default and configuration for enforcement.

@@ -1,0 +1,9 @@
+== Acknowledgments
+
+With this plugin, I'm "standing on the shoulders of giants", and would like to take the time to give a
+special thanks, to the people, whose work made this plugin possible:
+
+* Cédric Champeau(AKA melix) The original Author of @Compile Static.
+* Paul King One of the biggest contributes to the Groovy Language, who also has worked on Groovy's static compilation.
+* Hubert Klein Ikkink(AKA mrhaki) A major player in the Groovy Community, with this tutorial blog posts: `http://mrhaki.blogspot.com`
+* Anyone who also worked on @CompileStatic, while I only saw Cédric, and Paul I didn't do an exhaustive search of all the support classes.

@@ -1,0 +1,9 @@
+conventions = [
+        disableDynamicCompile       : false,
+        dynamicCompileWhiteList     : [],
+
+        compileStaticExtensions     : [],
+        limitCompileStaticExtensions: false,
+        defAllowed                  : true,
+        skipDefaultPackage          : false
+]

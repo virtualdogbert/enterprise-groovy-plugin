@@ -1,0 +1,14 @@
+include::introduction.adoc[]
+
+include::versionHistory.adoc[]
+
+include::gettingStarted.adoc[]
+
+include::configuration.adoc[]
+
+include::groovyConsole.adoc[]
+
+include::aStepFurther.adoc[]
+
+include::acknowledgments.adoc[]
+

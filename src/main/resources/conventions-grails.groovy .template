@@ -1,0 +1,25 @@
+conventions = [
+        disableDynamicCompile       : true,
+        dynamicCompileWhiteList     : [
+                'UrlMappings',
+                'Application',
+                'Script1',
+                'BootStrap',
+                'resources',
+                'org.grails.cli'
+        ],
+
+        compileStaticExtensions     : [
+                'org.grails.compiler.ValidateableTypeCheckingExtension',
+                'org.grails.compiler.NamedQueryTypeCheckingExtension',
+                'org.grails.compiler.HttpServletRequestTypeCheckingExtension',
+                'org.grails.compiler.WhereQueryTypeCheckingExtension',
+                'org.grails.compiler.DynamicFinderTypeCheckingExtension',
+                'org.grails.compiler.DomainMappingTypeCheckingExtension',
+                'org.grails.compiler.RelationshipManagementMethodTypeCheckingExtension'
+        ],
+
+        limitCompileStaticExtensions: true,
+        defAllowed                  : false, //For controllers you can use Object in place of def, and in Domains add Closure to constraints/mappings closure fields.
+        skipDefaultPackage          : true, //For GSP files
+]
