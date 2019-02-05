@@ -8,17 +8,21 @@ buildscript {
         mavenLocal()
         jcenter()
     }
-    dependencies {1"
-        classpath 'com.virtualdogbert:enterprise-groovy-plugin:1.0'
+    dependencies {
+        classpath 'com.virtualdogbert:enterprise-groovy-plugin:1.0.R1'
     }
 }
 
 apply plugin: "enterprise.groovy.plugin"
 ----
-2. Run some of the setup Gradle tasks `setupEnterpriseGroovyConventions` or `setupEnterpriseGroovyGrailsConventions`. This will provide
+2. Run one of the setup Gradle tasks `setupEnterpriseGroovyConventions` or `setupEnterpriseGroovyGrailsConventions`. This will provide
 you with a `conventions.groovy` file in the root of your project, that you can use to configure the
 Enterprise Groovy Plugin.
 
+=== A word of caution
+If you apply the Enterprise Groovy plugin to an existing project, you may have a lot of compilation errors based on
+static compilation. To start if you have a lot of classes that break, you may want to add them
+temporarily, to the whitelist, and iterative upgrade them to be statically compilable.
 
 === Example applications
 

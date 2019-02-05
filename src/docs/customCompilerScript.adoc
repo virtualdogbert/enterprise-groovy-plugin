@@ -1,6 +1,6 @@
 == Custom Compiler Script
 
-The plugin also support setting a custom compiler script by setting the following property in gradle.properties:
+The Enterprise Groovy plugin also supports setting a custom compiler script, by setting the following property in gradle.properties:
 [source,groovy]
 ----
 compilationScript = compilerConfig.groovy
@@ -15,4 +15,5 @@ http://mrhaki.blogspot.com/2016/01/groovy-goodness-customising-groovy.html[Groov
 Also check out the JavaDoc for the SecureASTCustomizer:
 http://docs.groovy-lang.org/latest/html/api/org/codehaus/groovy/control/customizers/SecureASTCustomizer.html[SecureASTCustomizer JavaDoc]
 
-While a custom compiler script can provide functionality similar to this plugin, for compile static, it's not at flexible.
+While a custom compiler script can provide functionality similar to this plugin, for compile static, it's not at flexible, and your
+mileage may vary.

@@ -18,7 +18,7 @@ conventions = [
 
 * disableDynamicCompile- This disables the use of `@CompileDynamic`. If true and `@CompileDynamic` is present a compilation error will be thrown.
 * dynamicCompileWhiteList -  A list of file names, package names, or partial names for white listing classes that will not be statically compiled by default, and won't be subject to any of the Enterprise Groovy Rules.
-* compileStaticExtensions - A list of Compilation extensions to be applies to the static compilation. These can be used to either make the static compilation, more, or less strict.
+* compileStaticExtensions - A list of Compilation extensions to be applied to the static compilation. These can be used to either make the static compilation, more, or less strict.
 * limitCompileStaticExtensions - if true then only the compileStaticExtensions specified can be used. So if you manually use a @CompileStatic Annotation, you wouldn't be able to use any extensions, beyond the ones listed.
 * defAllowed - If the `def` keyword is allowed for properties/fields, method returns or method parameters. If you want to restrict de within methods, take a look at the "Taking it a step further" section.
 * skipDefaultPackage - If set true this will whitelist any classes in the default package.

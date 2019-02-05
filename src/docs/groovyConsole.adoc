@@ -1,4 +1,4 @@
 == Groovy Console
-The plugin will provide a gradle task to bring up a Groovy Console, if the project doesn't already
+The Enterprise Groovy plugin will provide a gradle task to bring up a Groovy Console, if the project doesn't already
 provide one. This can be good for playing with Groovy code, and more importantly using the AST Browser.
 The AST browser, allows you to see, what the Groovy Compiler does to your code, making it less magical.

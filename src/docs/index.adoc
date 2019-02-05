@@ -6,6 +6,8 @@ include::gettingStarted.adoc[]
 
 include::configuration.adoc[]
 
+include::customCompilerScript.adoc[]
+
 include::groovyConsole.adoc[]
 
 include::aStepFurther.adoc[]
