@@ -83,10 +83,16 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
         //Adds Enterprise Groovy library to the project
         project.dependencies {
-            delegate.compile('com.virtualdogbert:enterprise-groovy:1.0')
+            delegate.compile('com.virtualdogbert:enterprise-groovy:1.0.RC1')
         }
     }
 
+    /**
+     * Util method for copying a convention file, to the root of the prodject.
+     *
+     * @param file The path to the config file.
+     * @param project the project to copy the file to.
+     */
     void copyFileToProject(String file, Project project) {
         String conventionsIn = loader.getResourceAsStream(file).text
         File conventionsOut = new File("$project.projectDir/$conventionsOut")
