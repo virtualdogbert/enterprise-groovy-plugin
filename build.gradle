@@ -173,7 +173,7 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = 'https://github.com/virtualdogbert/enterprise=groovy-plugin'
+    website = 'https://virtualdogbert.github.io/enterprise-groovy-plugin/'
     vcsUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin.git'
     tags = ['groovy', 'enterprise', 'compileStatic', 'static compiliation', 'static']
 }
