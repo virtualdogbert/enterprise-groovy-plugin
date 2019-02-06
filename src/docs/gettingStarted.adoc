@@ -1,6 +1,16 @@
 == Getting Started
 
 1.  To get started install the Enterprise Groovy plugin, in your `build.grade`:
+
+[source,groovy]
+----
+plugins {
+  id "enterprise.groovy.plugin" version "1.0.RC1"
+}
+----
+
+Or the older way:
+
 [source,groovy]
 ----
 buildscript {
