@@ -12,5 +12,7 @@ include::groovyConsole.adoc[]
 
 include::aStepFurther.adoc[]
 
+include::issues.adoc[]
+
 include::acknowledgments.adoc[]
 

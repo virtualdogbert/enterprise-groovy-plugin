@@ -1,0 +1,8 @@
+== Issues and Source Code
+If you have any issues with The Enterprise Groovy plugin you can report them here:
+
+https://github.com/virtualdogbert/enterprise-groovy-plugin/issues
+
+The source is also in Github, and pull requests are welcome:
+
+https://github.com/virtualdogbert/enterprise-groovy-plugin
