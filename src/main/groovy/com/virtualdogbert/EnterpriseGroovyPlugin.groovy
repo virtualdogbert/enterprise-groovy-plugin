@@ -37,7 +37,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
     void apply(Project project) {
 
-        if (!project.hasProperty('console')) {
+        if (!project.hasProperty('console') && project.hasProperty('sourceSets')) {
 
             //Adds Groovy console task
             project.task('console', dependsOn: 'classes', type: JavaExec) {
