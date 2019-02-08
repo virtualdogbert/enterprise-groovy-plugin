@@ -83,7 +83,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
         //Adds Enterprise Groovy library to the project
         project.dependencies {
-            delegate.compile('com.virtualdogbert:enterprise-groovy:1.0.RC1')
+            delegate.compile('com.virtualdogbert:enterprise-groovy:1.0.RC2')
         }
     }
 
