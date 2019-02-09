@@ -496,16 +496,6 @@ more details.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id "enterprise.groovy.plugin" version "1.0.RC2"
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Or the older way:</p>
-</div>
-<div class="listingblock">
-<div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">buildscript {
     repositories {
         mavenLocal()
@@ -526,13 +516,19 @@ apply plugin: "enterprise.groovy.plugin"</code></pre>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-If you use the newer way for some reason the plugin won&#8217;t be able to see the sourceSets property,
-which will cause the console task not to work. To work around this error for now, if the sourceSets
-property can&#8217;t be found, the console task won&#8217;t be available. So if you want to use the console task
-apply this plugin using the older gradle method of adding plugins.
+For now do not use the new way of adding gradle plugins like below. This will cause the Enterprise
+Groovy plugin not to function properly. More research is required to get this working, and  will be released
+in a future version of Enterprise Groovy.
 </td>
 </tr>
 </table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">plugins {
+  id "enterprise.groovy.plugin" version "1.0.RC2"
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Then run one of the setup Gradle tasks <code>setupEnterpriseGroovyConventions</code> or <code>setupEnterpriseGroovyGrailsConventions</code>. This will provide
@@ -806,7 +802,7 @@ special thanks, to the people, whose work made this plugin possible:</p>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.RC2<br>
-Last updated 2019-02-06 18:51:39 -05:00
+Last updated 2019-02-09 12:49:48 -05:00
 </div>
 </div>
 </body>
