@@ -1,5 +1,17 @@
 == Configuration
 
+The configuration which will be generated in the root of your project. This is required for the plugin
+to be able to find it. If the plugin can't find the configuration, or if you didin't set one up the default
+configuration will be applied, which you can see below.
+
+Also for the configuration to be picked up, you have to build to one of the following directories:
+
+* build
+* target
+* output
+
+`build` is the default directory, that gradle builds to, so if you don't change it everything should work.
+
 === Default Configuration
 If during the setup you choose `setupEnterpriseGroovyConventions` you will get a conventions.groovy like this:
 

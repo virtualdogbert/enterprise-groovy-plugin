@@ -1,3 +1,8 @@
 == Version History
-* 1.0
+* 1.0.RC2
+** Fixing some issues related to Gradle 5, and not being able to find the config.
+** Fixing an issue with the Groovy Console also related to Gradle 5. If the property sourceSets
+is not available then the Groovy Console will not be available, see the getting started section for
+more details.
+* 1.0.RC1
 ** Initial Release with compile static by default and configuration for enforcement.
