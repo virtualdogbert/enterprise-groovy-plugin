@@ -4,15 +4,6 @@ To get started install the Enterprise Groovy plugin, in your `build.grade`:
 
 [source,groovy]
 ----
-plugins {
-  id "enterprise.groovy.plugin" version "1.0.RC2"
-}
-----
-
-Or the older way:
-
-[source,groovy]
-----
 buildscript {
     repositories {
         mavenLocal()
@@ -26,10 +17,15 @@ buildscript {
 apply plugin: "enterprise.groovy.plugin"
 ----
 
-WARNING: If you use the newer way for some reason the plugin won't be able to see the sourceSets property,
-which will cause the console task not to work. To work around this error for now, if the sourceSets
-property can't be found, the console task won't be available. So if you want to use the console task
-apply this plugin using the older gradle method of adding plugins.
+WARNING: For now do not use the new way of adding gradle plugins like below. This will cause the Enterprise
+Groovy plugin not to function properly. More research is required to get this working, and  will be released
+in a future version of Enterprise Groovy.
+[source,groovy]
+----
+plugins {
+  id "enterprise.groovy.plugin" version "1.0.RC2"
+}
+----
 
 Then run one of the setup Gradle tasks `setupEnterpriseGroovyConventions` or `setupEnterpriseGroovyGrailsConventions`. This will provide
 you with a `conventions.groovy` file in the root of your project, that you can use to configure the
