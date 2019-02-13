@@ -27,7 +27,7 @@ plugins {
 }
 
 group = 'com.virtualdogbert'
-version = '1.0.RC2'
+version = '1.0.RC3'
 description = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
 
 configurations {
