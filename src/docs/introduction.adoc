@@ -3,6 +3,6 @@
 One of the biggest complaints about Groovy is that it's a dynamically compiled language, and that it's
  optional static compilation feels bolted on. *The Enterprise Groovy Plugin* fixes, this by making static
  compilation the default, and gives you a configuration for optional enforcement. Groovy is a very
- powerful, and expressive language, and there maybe times/places/companies, that want to take advantage of that power,
+ powerful, and expressive language, and there may be times/places/companies, that want to take advantage of that power,
  but restrict it, because they have a large team, or have junior developers, etc. This is Where *Enterprise Groovy* comes
  in, giving you the tools to rein in some of the dynamic power, but whitelist it where it is needed.

@@ -1,7 +1,7 @@
 == Taking it a step further
 
-While with the Enterprise Groovy plugin, I could implement many rules, and you can do more with a custom compiler script, the down
-side to that is you will end up with a potentially slower compilation. Also there Already exists a
+While with the Enterprise Groovy plugin, I could implement many rules, and you can do more with a custom compiler script, the
+downside to that is you will end up with a potentially slower compilation. Also, there Already exists a
 static checker called `Code Narc`:
 
 http://codenarc.sourceforge.ne[Code Narc website]
@@ -19,7 +19,7 @@ Jenn Strater also did a good talk during GR8Conf 2016:
 https://www.youtube.com/watch?v=3v18NB7pyCY[Codenarc Revisited]
 
 Combining the Enterprise Groovy plugin, and the Code Narc plugin, will give you a lot of control for
-enforcing, static compilation, and coding standards. This is not to say you shouldn't do code reviews,
+enforcing static compilation, and coding standards. This is not to say you shouldn't do code reviews,
 because that will make sure that individuals aren't changing the conventions.groovy/codenarc rules.
 If you want to be really enterprisy/restrictive, you could lock down your builds, and make them check
 that the conventions.groovy, hasn't been changed, using a hash or golden file.

@@ -17,7 +17,7 @@ buildscript {
 apply plugin: "enterprise.groovy.plugin"
 ----
 
-WARNING: For now do not use the new way of adding gradle plugins like below. This will cause the Enterprise
+WARNING: For now, do not use the new way of adding Gradle plugins like below. This will cause the Enterprise
 Groovy plugin not to function properly. More research is required to get this working, and  will be released
 in a future version of Enterprise Groovy.
 [source,groovy]
@@ -34,6 +34,11 @@ Enterprise Groovy Plugin.
 WARNING: If you apply the Enterprise Groovy plugin to an existing project, you may have a lot of compilation errors based on
 static compilation. To start if you have a lot of classes that break, you may want to add them
 temporarily, to the whitelist, and iterative upgrade them to be statically compilable.
+
+WARNING: Groovy Scripts like those that run under a Groovy shell, will not be statically compiled,
+because there currently isn't a way during compilation, that the conventions.groovy config, can be
+access from a script.
+
 
 === Example applications
 
