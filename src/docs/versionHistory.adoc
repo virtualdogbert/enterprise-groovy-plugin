@@ -3,7 +3,7 @@
 ** Scripts like those from a Groovy shell will be skipped automatically for static compilation.
 This is because there is no way currently to get the configuration during compilation from the script.
 ** Changing the plugin to add the Enterprise Groovy library to the project, using `implementation`, rather,
-than `compile`, to avoid introducing transient dependencies.
+then `compile`, to avoid introducing transient dependencies.
 * 1.0.RC2
 ** Fixing some issues related to Gradle 5, and not being able to find the config.
 ** Fixing an issue with the Groovy Console also related to Gradle 5. If the property sourceSets
