@@ -448,7 +448,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>One of the biggest complaints about Groovy is that it&#8217;s a dynamically compiled language, and that it&#8217;s
  optional static compilation feels bolted on. <strong>The Enterprise Groovy Plugin</strong> fixes, this by making static
  compilation the default, and gives you a configuration for optional enforcement. Groovy is a very
- powerful, and expressive language, and there maybe times/places/companies, that want to take advantage of that power,
+ powerful, and expressive language, and there may be times/places/companies, that want to take advantage of that power,
  but restrict it, because they have a large team, or have junior developers, etc. This is Where <strong>Enterprise Groovy</strong> comes
  in, giving you the tools to rein in some of the dynamic power, but whitelist it where it is needed.</p>
 </div>
@@ -459,6 +459,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="ulist">
 <ul>
+<li>
+<p>1.0.RC3</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Scripts like those from a Groovy shell will be skipped automatically for static compilation.
+This is because there is no way currently to get the configuration during compilation from the script.</p>
+</li>
+<li>
+<p>Changing the plugin to add the Enterprise Groovy library to the project, using <code>implementation</code>, rather,
+than <code>compile</code>, to avoid introducing transient dependencies.</p>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>1.0.RC2</p>
 <div class="ulist">
@@ -516,7 +531,7 @@ apply plugin: "enterprise.groovy.plugin"</code></pre>
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-For now do not use the new way of adding gradle plugins like below. This will cause the Enterprise
+For now, do not use the new way of adding Gradle plugins like below. This will cause the Enterprise
 Groovy plugin not to function properly. More research is required to get this working, and  will be released
 in a future version of Enterprise Groovy.
 </td>
@@ -549,6 +564,20 @@ temporarily, to the whitelist, and iterative upgrade them to be statically compi
 </tr>
 </table>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Groovy Scripts like those that run under a Groovy shell, will not be statically compiled,
+because there currently isn&#8217;t a way during compilation, that the conventions.groovy config, can be
+access from a script.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="example-applications">3.1. Example applications</h3>
 <div class="paragraph">
@@ -573,7 +602,7 @@ compilation, or rules set in the conventions.groovy:</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The configuration which will be generated in the root of your project. This is required for the plugin
-to be able to find it. If the plugin can&#8217;t find the configuration, or if you didin&#8217;t set one up the default
+to be able to find it. If the plugin can&#8217;t find the configuration, or if you didn&#8217;t set one up the default
 configuration will be applied, which you can see below.</p>
 </div>
 <div class="paragraph">
@@ -593,7 +622,7 @@ configuration will be applied, which you can see below.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p><code>build</code> is the default directory, that gradle builds to, so if you don&#8217;t change it everything should work.</p>
+<p><code>build</code> is the default directory, that Gradle builds to, so if you don&#8217;t change it everything should work.</p>
 </div>
 <div class="sect2">
 <h3 id="default-configuration">4.1. Default Configuration</h3>
@@ -619,7 +648,7 @@ configuration will be applied, which you can see below.</p>
 <p>disableDynamicCompile- This disables the use of <code>@CompileDynamic</code>. If true and <code>@CompileDynamic</code> is present a compilation error will be thrown.</p>
 </li>
 <li>
-<p>dynamicCompileWhiteList -  A list of file names, package names, or partial names for white listing classes that will not be statically compiled by default, and won&#8217;t be subject to any of the Enterprise Groovy Rules.</p>
+<p>dynamicCompileWhiteList -  A list of file names, package names, or partial names for whitelisting classes that will not be statically compiled by default, and won&#8217;t be subject to any of the Enterprise Groovy Rules.</p>
 </li>
 <li>
 <p>compileStaticExtensions - A list of Compilation extensions to be applied to the static compilation. These can be used to either make the static compilation, more, or less strict.</p>
@@ -710,8 +739,8 @@ mileage may vary.</p>
 <h2 id="groovy-console">6. Groovy Console</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Enterprise Groovy plugin will provide a gradle task to bring up a Groovy Console, if the project doesn&#8217;t already
-provide one. This can be good for playing with Groovy code, and more importantly using the AST Browser.
+<p>The Enterprise Groovy plugin will provide a Gradle task to bring up a Groovy Console, if the project doesn&#8217;t already
+provide one. This can be good for playing with Groovy code, and more importantly, using the AST Browser.
 The AST browser, allows you to see, what the Groovy Compiler does to your code, making it less magical.</p>
 </div>
 </div>
@@ -720,8 +749,8 @@ The AST browser, allows you to see, what the Groovy Compiler does to your code, 
 <h2 id="taking-it-a-step-further">7. Taking it a step further</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>While with the Enterprise Groovy plugin, I could implement many rules, and you can do more with a custom compiler script, the down
-side to that is you will end up with a potentially slower compilation. Also there Already exists a
+<p>While with the Enterprise Groovy plugin, I could implement many rules, and you can do more with a custom compiler script, the
+downside to that is you will end up with a potentially slower compilation. Also, there Already exists a
 static checker called <code>Code Narc</code>:</p>
 </div>
 <div class="paragraph">
@@ -746,7 +775,7 @@ slow your compilation process down, it would be a good idea to hook this into yo
 </div>
 <div class="paragraph">
 <p>Combining the Enterprise Groovy plugin, and the Code Narc plugin, will give you a lot of control for
-enforcing, static compilation, and coding standards. This is not to say you shouldn&#8217;t do code reviews,
+enforcing static compilation, and coding standards. This is not to say you shouldn&#8217;t do code reviews,
 because that will make sure that individuals aren&#8217;t changing the conventions.groovy/codenarc rules.
 If you want to be really enterprisy/restrictive, you could lock down your builds, and make them check
 that the conventions.groovy, hasn&#8217;t been changed, using a hash or golden file.</p>
@@ -801,8 +830,8 @@ special thanks, to the people, whose work made this plugin possible:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.RC2<br>
-Last updated 2019-02-09 12:49:48 -05:00
+Version 1.0.RC3<br>
+Last updated 2019-02-09 15:02:21 -05:00
 </div>
 </div>
 </body>
