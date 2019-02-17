@@ -22,7 +22,11 @@ package com.virtualdogbert
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.DependencyResolutionListener
+import org.gradle.api.artifacts.DependencySet
+import org.gradle.api.artifacts.ResolvableDependencies
 import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.compile.GroovyCompile
 
 /**
  * This plugin adds the Enterprise Groovy library, source sets to match the config for Enterprise Groovy, and the Groovy console which is good for
@@ -36,26 +40,6 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
     private final ClassLoader loader                = getClass().getClassLoader()
 
     void apply(Project project) {
-
-        if (!project.hasProperty('console') && project.hasProperty('sourceSets')) {
-
-            //Adds Groovy console task
-            project.task('console', dependsOn: 'classes', type: JavaExec) {
-                group = 'enterprise groovy'
-
-                logger.debug("Opening Gradle Console")
-
-                main = 'groovy.ui.Console'
-
-                Configuration consoleRuntime = project.configurations.create("consoleRuntime")
-                consoleRuntime.dependencies.add(project.dependencies.localGroovy())
-
-                classpath = project.sourceSets.main.runtimeClasspath + project.sourceSets.test.runtimeClasspath + project.files(consoleRuntime.asPath)
-                logger.debug("Gradle Console classpath=$classpath")
-            }
-        }
-
-
         //Adds a task to setup the Enterprise Groovy conventions, coping over the default conventions.groovy.
         project.task('setupEnterpriseGroovyConventions') {
             group = 'enterprise groovy'
@@ -74,21 +58,51 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
             }
         }
 
-        if (project.hasProperty('compilationScript')) {
-            // Add the configuration script file
-            // to the compiler options.
-            project.compileGroovy.groovyOptions.configurationScript = project.file(project.compilationScript)
-        }
+        project.tasks.withType(GroovyCompile) {
+            if (!project.hasProperty('console')) {
+
+                //Adds Groovy console task
+                project.task('console', dependsOn: 'classes', type: JavaExec) {
+                    group = 'enterprise groovy'
+
+                    logger.debug("Opening Gradle Console")
+
+                    main = 'groovy.ui.Console'
+
+                    Configuration consoleRuntime = project.configurations.create("consoleRuntime")
+                    consoleRuntime.dependencies.add(project.dependencies.localGroovy())
+
+                    classpath = project.sourceSets.main.runtimeClasspath + project.files(consoleRuntime.asPath)
+                    logger.debug("Gradle Console classpath=$classpath")
+                }
+            }
+
+            if (project.hasProperty('compilationScript')) {
+                // Add the configuration script file
+                // to the compiler options.
+                project.compileGroovy.groovyOptions.configurationScript = project.file(project.compilationScript)
+            } else {
+                project.compileGroovy.groovyOptions.configurationScript = project.file('conventions.groovy')
+            }
 
 
-        //Adds Enterprise Groovy library to the project
-        project.dependencies {
-            delegate.implementation('com.virtualdogbert:enterprise-groovy:1.0.RC3')
+            //Adds Enterprise Groovy library to the project
+            DependencySet compileDeps = project.getConfigurations().getByName("compileOnly").getDependencies()
+            project.getGradle().addListener(new DependencyResolutionListener() {
+                @Override
+                void beforeResolve(ResolvableDependencies resolvableDependencies) {
+                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.RC4"))
+                    project.getGradle().removeListener(this)
+                }
+
+                @Override
+                void afterResolve(ResolvableDependencies resolvableDependencies) {}
+            })
         }
     }
 
     /**
-     * Util method for copying a convention file, to the root of the prodject.
+     * Util method for copying a convention file, to the root of the project.
      *
      * @param file The path to the config file.
      * @param project the project to copy the file to.
