@@ -1,33 +1,40 @@
 == Configuration
 
-The configuration which will be generated in the root of your project. This is required for the plugin
-to be able to find it. If the plugin can't find the configuration, or if you didn't set one up the default
-configuration will be applied, which you can see below.
+The generated configuration, which will be generated in the root of your project, and be called conventions.groovy.
+This configuration is actually a custom compilation script. For more information about custom compilation
+scripts, see the Custom Compiler Script section. You can change the location of the configuration, by setting
+the following property, in gradle.properties:
+[source,groovy]
+----
+compilationScript = conventions.groovy
+----
 
-Also for the configuration to be picked up, you have to build to one of the following directories:
-
-* build
-* target
-* output
-
-`build` is the default directory, that Gradle builds to, so if you don't change it everything should work.
+If you don't set up a configuration, the default configuration will be applied, which you can see below.
 
 === Default Configuration
 If during the setup you choose `setupEnterpriseGroovyConventions` you will get a conventions.groovy like this:
 
 [source,groovy]
 ----
-conventions = [
+Map conventions = [
+        disable                     : false,
+        whiteListScripts            : false,
+
         disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [],
 
         compileStaticExtensions     : [],
         limitCompileStaticExtensions: false,
+
         defAllowed                  : true,
         skipDefaultPackage          : false
 ]
+
+System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.inspect()}")
 ----
 
+* disable - This disables the Enterprise Groovy plugin, so it won't add static compilation, or do any compile-time checks.
+* whiteListScripts - This will disable automatic static compilation for dynamic scripts. These scripts could be DSLs used by a framework or if you use a Groovy Shell in your code.
 * disableDynamicCompile- This disables the use of `@CompileDynamic`. If true and `@CompileDynamic` is present a compilation error will be thrown.
 * dynamicCompileWhiteList -  A list of file names, package names, or partial names for whitelisting classes that will not be statically compiled by default, and won't be subject to any of the Enterprise Groovy Rules.
 * compileStaticExtensions - A list of Compilation extensions to be applied to the static compilation. These can be used to either make the static compilation, more, or less strict.
@@ -41,12 +48,14 @@ If during the setup you choose `setupEnterpriseGroovyGrailsConventions` you will
 
 [source,groovy]
 ----
-conventions = [
-        disableDynamicCompile       : true,
+Map conventions = [
+        disable                     : false,
+        whiteListScripts            : true,
+
+        disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [
                 'UrlMappings',
                 'Application',
-                'Script1',
                 'BootStrap',
                 'resources',
                 'org.grails.cli'
@@ -62,10 +71,12 @@ conventions = [
                 'org.grails.compiler.RelationshipManagementMethodTypeCheckingExtension'
         ],
 
-        limitCompileStaticExtensions: true,
+        limitCompileStaticExtensions: false,
         defAllowed                  : false, //For controllers you can use Object in place of def, and in Domains add Closure to constraints/mappings closure fields.
-        skipDefaultPackage          : true,  //For GSP files
+        skipDefaultPackage          : true, //For GSP files
 ]
+
+System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.inspect()}")
 ----
 
 These are defaults that I tested, that seem to work for Grails.

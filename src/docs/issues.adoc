@@ -3,7 +3,8 @@ If you have any issues with The Enterprise Groovy plugin you can report them her
 
 https://github.com/virtualdogbert/enterprise-groovy-plugin/issues
 
-The source is also in Github, and pull requests are welcome:
+The source is also in Github, divided into two repositories, one for the plugin, and one for the library,
+that adds the static compilation, and checks. Pull requests are welcome:
 
 https://github.com/virtualdogbert/enterprise-groovy-plugin
 

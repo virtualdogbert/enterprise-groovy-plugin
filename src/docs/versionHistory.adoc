@@ -1,4 +1,9 @@
 == Version History
+* 1.0.RC4
+** Fixed issue getting config to the AST transform, using a custom compiler script.
+** Fixed issue, where Enterprise Groovy becomes a transient dependency.
+** Fixed issues with Gradle 5 not being able to use the plugin DSL.
+** Updated the documentation.
 * 1.0.RC3
 ** Scripts like those from a Groovy shell will be skipped automatically for static compilation.
 This is because there is no way currently to get the configuration during compilation from the script.

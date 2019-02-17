@@ -1,9 +1,10 @@
 == Custom Compiler Script
 
-The Enterprise Groovy plugin also supports setting a custom compiler script, by setting the following property in gradle.properties:
+The Enterprise Groovy plugin also supports a custom compiler script, which is how it configures adding the static compilation, and
+the compilation checks. To customize the location of the compiler script you can set the following property in gradle.properties:
 [source,groovy]
 ----
-compilationScript = compilerConfig.groovy
+compilationScript = conventions.groovy
 ----
 
 This is just a file path relative to the root of the project.
