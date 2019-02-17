@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.0">
 <meta name="copyright" content="Apache License, Version 2.0">
-<title>Introduction</title>
+<title>Introduction Enterprise Groovy Gradle Plugin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic|Noto+Serif:400,400italic,700,700italic|Droid+Sans+Mono:400">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -419,7 +419,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#introduction-enterprise-groovy-gradle-plugin">1. Introduction Enterprise Groovy Gradle Plugin</a></li>
 <li><a href="#version-history">2. Version History</a></li>
 <li><a href="#getting-started">3. Getting Started</a>
 <ul class="sectlevel2">
@@ -442,11 +442,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="introduction">1. Introduction</h2>
+<h2 id="introduction-enterprise-groovy-gradle-plugin">1. Introduction Enterprise Groovy Gradle Plugin</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>One of the biggest complaints about Groovy is that it&#8217;s a dynamically compiled language, and that it&#8217;s
- optional static compilation feels bolted on. <strong>The Enterprise Groovy Plugin</strong> fixes, this by making static
+<p>One of the biggest complaints about Groovy is that it&#8217;s a dynamically compiled language, and that its
+ optional static compilation feels bolted on. <strong>The Enterprise Groovy Plugin</strong> looks to fix this, by making static
  compilation the default, and gives you a configuration for optional enforcement. Groovy is a very
  powerful, and expressive language, and there may be times/places/companies, that want to take advantage of that power,
  but restrict it, because they have a large team, or have junior developers, etc. This is Where <strong>Enterprise Groovy</strong> comes
@@ -459,6 +459,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="ulist">
 <ul>
+<li>
+<p>1.0.RC4</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fixed issue getting config to the AST transform, using a custom compiler script.</p>
+</li>
+<li>
+<p>Fixed issue, where Enterprise Groovy becomes a transient dependency.</p>
+</li>
+<li>
+<p>Fixed issues with Gradle 5 not being able to use the plugin DSL.</p>
+</li>
+<li>
+<p>Updated the documentation.</p>
+</li>
+</ul>
+</div>
+</li>
 <li>
 <p>1.0.RC3</p>
 <div class="ulist">
@@ -507,41 +526,30 @@ more details.</p>
 <h2 id="getting-started">3. Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To get started install the Enterprise Groovy plugin, in your <code>build.grade</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">buildscript {
-    repositories {
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.virtualdogbert:enterprise-groovy-plugin:1.0.RC3'
-    }
-}
-
-apply plugin: "enterprise.groovy.plugin"</code></pre>
-</div>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-For now, do not use the new way of adding Gradle plugins like below. This will cause the Enterprise
-Groovy plugin not to function properly. More research is required to get this working, and  will be released
-in a future version of Enterprise Groovy.
-</td>
-</tr>
-</table>
+<p>To get started, install the Enterprise Groovy plugin, in your <code>build.grade</code>:
+Using the plugins DSL:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id "enterprise.groovy.plugin" version "1.0.RC3"
+  id "enterprise.groovy.plugin" version "1.0.RC4"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Using legacy plugin application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.virtualdogbert:enterprise-groovy-plugin:1.0.RC4"
+  }
 }</code></pre>
 </div>
 </div>
@@ -559,21 +567,7 @@ Enterprise Groovy Plugin.</p>
 <td class="content">
 If you apply the Enterprise Groovy plugin to an existing project, you may have a lot of compilation errors based on
 static compilation. To start if you have a lot of classes that break, you may want to add them
-temporarily, to the whitelist, and iterative upgrade them to be statically compilable.
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-Groovy Scripts like those that run under a Groovy shell, will not be statically compiled,
-because there currently isn&#8217;t a way during compilation, that the conventions.groovy config, can be
-access from a script.
+temporarily, to the whitelist, and iteratively upgrade them, to be statically compilable.
 </td>
 </tr>
 </table>
@@ -589,6 +583,13 @@ compilation, or rules set in the conventions.groovy:</p>
 <li>
 <p><a href="https://github.com/virtualdogbert/test-enterprise-groovy">GitHub test-enterprise-groovy</a></p>
 </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Here is another application which has a different setup, and was used to debug some issues:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p><a href="https://github.com/virtualdogbert/SUPPLIES">GitHub SUPPLIES</a></p>
 </li>
@@ -601,28 +602,18 @@ compilation, or rules set in the conventions.groovy:</p>
 <h2 id="configuration">4. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The configuration which will be generated in the root of your project. This is required for the plugin
-to be able to find it. If the plugin can&#8217;t find the configuration, or if you didn&#8217;t set one up the default
-configuration will be applied, which you can see below.</p>
+<p>The generated configuration, which will be generated in the root of your project, and be called conventions.groovy.
+This configuration is actually a custom compilation script. For more information about custom compilation
+scripts, see the Custom Compiler Script section. You can change the location of the configuration, by setting
+the following property, in gradle.properties:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">compilationScript = conventions.groovy</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Also for the configuration to be picked up, you have to build to one of the following directories:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>build</p>
-</li>
-<li>
-<p>target</p>
-</li>
-<li>
-<p>output</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><code>build</code> is the default directory, that Gradle builds to, so if you don&#8217;t change it everything should work.</p>
+<p>If you don&#8217;t set up a configuration, the default configuration will be applied, which you can see below.</p>
 </div>
 <div class="sect2">
 <h3 id="default-configuration">4.1. Default Configuration</h3>
@@ -631,19 +622,31 @@ configuration will be applied, which you can see below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">conventions = [
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Map conventions = [
+        disable                     : false,
+        whiteListScripts            : false,
+
         disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [],
 
         compileStaticExtensions     : [],
         limitCompileStaticExtensions: false,
+
         defAllowed                  : true,
         skipDefaultPackage          : false
-]</code></pre>
+]
+
+System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.inspect()}")</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p>disable - This disables the Enterprise Groovy plugin, so it won&#8217;t add static compilation, or do any compile-time checks.</p>
+</li>
+<li>
+<p>whiteListScripts - This will disable automatic static compilation for dynamic scripts. These scripts could be DSLs used by a framework or if you use a Groovy Shell in your code.</p>
+</li>
 <li>
 <p>disableDynamicCompile- This disables the use of <code>@CompileDynamic</code>. If true and <code>@CompileDynamic</code> is present a compilation error will be thrown.</p>
 </li>
@@ -672,12 +675,14 @@ configuration will be applied, which you can see below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">conventions = [
-        disableDynamicCompile       : true,
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Map conventions = [
+        disable                     : false,
+        whiteListScripts            : true,
+
+        disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [
                 'UrlMappings',
                 'Application',
-                'Script1',
                 'BootStrap',
                 'resources',
                 'org.grails.cli'
@@ -693,10 +698,12 @@ configuration will be applied, which you can see below.</p>
                 'org.grails.compiler.RelationshipManagementMethodTypeCheckingExtension'
         ],
 
-        limitCompileStaticExtensions: true,
+        limitCompileStaticExtensions: false,
         defAllowed                  : false, //For controllers you can use Object in place of def, and in Domains add Closure to constraints/mappings closure fields.
-        skipDefaultPackage          : true,  //For GSP files
-]</code></pre>
+        skipDefaultPackage          : true, //For GSP files
+]
+
+System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.inspect()}")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -709,11 +716,12 @@ configuration will be applied, which you can see below.</p>
 <h2 id="custom-compiler-script">5. Custom Compiler Script</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Enterprise Groovy plugin also supports setting a custom compiler script, by setting the following property in gradle.properties:</p>
+<p>The Enterprise Groovy plugin also supports a custom compiler script, which is how it configures adding the static compilation, and
+the compilation checks. To customize the location of the compiler script you can set the following property in gradle.properties:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">compilationScript = compilerConfig.groovy</code></pre>
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">compilationScript = conventions.groovy</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -792,7 +800,8 @@ that the conventions.groovy, hasn&#8217;t been changed, using a hash or golden f
 <p><a href="https://github.com/virtualdogbert/enterprise-groovy-plugin/issues" class="bare">https://github.com/virtualdogbert/enterprise-groovy-plugin/issues</a></p>
 </div>
 <div class="paragraph">
-<p>The source is also in Github, and pull requests are welcome:</p>
+<p>The source is also in Github, divided into two repositories, one for the plugin, and one for the library,
+that adds the static compilation, and checks. Pull requests are welcome:</p>
 </div>
 <div class="paragraph">
 <p><a href="https://github.com/virtualdogbert/enterprise-groovy-plugin" class="bare">https://github.com/virtualdogbert/enterprise-groovy-plugin</a></p>
@@ -830,8 +839,8 @@ special thanks, to the people, whose work made this plugin possible:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.RC3<br>
-Last updated 2019-02-12 22:11:00 -05:00
+Version 1.0.RC4<br>
+Last updated 2019-02-16 10:42:37 -05:00
 </div>
 </div>
 </body>
