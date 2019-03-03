@@ -27,7 +27,6 @@ import org.gradle.api.artifacts.DependencySet
 import org.gradle.api.artifacts.ResolvableDependencies
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.compile.GroovyCompile
-
 /**
  * This plugin adds the Enterprise Groovy library, source sets to match the config for Enterprise Groovy, and the Groovy console which is good for
  * testing and debugging.
@@ -59,45 +58,49 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
         }
 
         project.tasks.withType(GroovyCompile) {
-            if (!project.hasProperty('console')) {
-
-                //Adds Groovy console task
-                project.task('console', dependsOn: 'classes', type: JavaExec) {
-                    group = 'enterprise groovy'
-
-                    logger.debug("Opening Gradle Console")
-
-                    main = 'groovy.ui.Console'
-
-                    Configuration consoleRuntime = project.configurations.create("consoleRuntime")
-                    consoleRuntime.dependencies.add(project.dependencies.localGroovy())
-
-                    classpath = project.sourceSets.main.runtimeClasspath + project.files(consoleRuntime.asPath)
-                    logger.debug("Gradle Console classpath=$classpath")
-                }
-            }
-
-            if (project.hasProperty('compilationScript')) {
-                // Add the configuration script file
-                // to the compiler options.
-                project.compileGroovy.groovyOptions.configurationScript = project.file(project.compilationScript)
-            } else {
-                project.compileGroovy.groovyOptions.configurationScript = project.file('conventions.groovy')
-            }
-
 
             //Adds Enterprise Groovy library to the project
             DependencySet compileDeps = project.getConfigurations().getByName("compileOnly").getDependencies()
             project.getGradle().addListener(new DependencyResolutionListener() {
                 @Override
                 void beforeResolve(ResolvableDependencies resolvableDependencies) {
-                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.RC4"))
+                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0"))
                     project.getGradle().removeListener(this)
                 }
 
                 @Override
                 void afterResolve(ResolvableDependencies resolvableDependencies) {}
             })
+
+            if (project.hasProperty('compilationScript')) {
+                // Add the configuration script file to the compiler options.
+                project.compileGroovy.groovyOptions.configurationScript = project.file(project.compilationScript)
+            } else {
+                project.compileGroovy.groovyOptions.configurationScript = project.file('conventions.groovy')
+            }
+
+            if (!project.hasProperty('console')) {
+
+                //Adds Groovy console task
+                project.task('console', dependsOn: 'classes', type: JavaExec) {
+                    group = 'enterprise groovy'
+
+                    main = 'groovy.ui.Console'
+
+                    systemProperties(['enterprise.groovy.console': 'true'])
+
+                    project.repositories {
+                        jcenter()
+                        mavenLocal()
+                    }
+
+                    Configuration consoleRuntime = project.configurations.create("consoleRuntime")
+                    consoleRuntime.dependencies.add(project.dependencies.localGroovy())
+                    consoleRuntime.dependencies.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0"))
+
+                    classpath = project.sourceSets.main.runtimeClasspath + project.files(consoleRuntime.asPath)
+                }
+            }
         }
     }
 
