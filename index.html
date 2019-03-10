@@ -460,6 +460,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="ulist">
 <ul>
 <li>
+<p>1.0</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Fixed loop hole for disabling dynamic compilation by disallowing <code>@CompileStatic(TypeCheckingMode.SKIP)</code> in addition to <code>@CompileDynamic</code>.</p>
+</li>
+<li>
+<p>Getting more of the configuration to the console task.</p>
+</li>
+<li>
+<p>Fixing some typos, and updating documentation.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
 <p>1.0.RC4</p>
 <div class="ulist">
 <ul>
@@ -526,13 +542,15 @@ more details.</p>
 <h2 id="getting-started">3. Getting Started</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To get started, install the Enterprise Groovy plugin, in your <code>build.grade</code>:
-Using the plugins DSL:</p>
+<p>To get started, install the Enterprise Groovy plugin, in your <code>build.grade</code>:</p>
+</div>
+<div class="paragraph">
+<p>Using the plugins DSL:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">plugins {
-  id "enterprise.groovy.plugin" version "1.0.RC4"
+  id "enterprise.groovy.plugin" version "1.0"
 }</code></pre>
 </div>
 </div>
@@ -548,7 +566,7 @@ Using the plugins DSL:</p>
     }
   }
   dependencies {
-    classpath "com.virtualdogbert:enterprise-groovy-plugin:1.0.RC4"
+    classpath "com.virtualdogbert:enterprise-groovy-plugin:1.0"
   }
 }</code></pre>
 </div>
@@ -624,7 +642,7 @@ the following property, in gradle.properties:</p>
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">Map conventions = [
         disable                     : false,
-        whiteListScripts            : false,
+        whiteListScripts            : true,
 
         disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [],
@@ -648,7 +666,7 @@ System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.i
 <p>whiteListScripts - This will disable automatic static compilation for dynamic scripts. These scripts could be DSLs used by a framework or if you use a Groovy Shell in your code.</p>
 </li>
 <li>
-<p>disableDynamicCompile- This disables the use of <code>@CompileDynamic</code>. If true and <code>@CompileDynamic</code> is present a compilation error will be thrown.</p>
+<p>disableDynamicCompile- This disables the use of <code>@CompileDynamic</code> and <code>@CompileStatic(TypeCheckingMode.SKIP)</code>. If true and <code>@CompileDynamic</code> or <code>@CompileStatic(TypeCheckingMode.SKIP)</code> is present a compilation error will be thrown.</p>
 </li>
 <li>
 <p>dynamicCompileWhiteList -  A list of file names, package names, or partial names for whitelisting classes that will not be statically compiled by default, and won&#8217;t be subject to any of the Enterprise Groovy Rules.</p>
@@ -660,7 +678,7 @@ System.setProperty('enterprise.groovy.conventions', "conventions=${conventions.i
 <p>limitCompileStaticExtensions - if true then only the compileStaticExtensions specified can be used. So if you manually use a @CompileStatic Annotation, you wouldn&#8217;t be able to use any extensions, beyond the ones listed.</p>
 </li>
 <li>
-<p>defAllowed - If the <code>def</code> keyword is allowed for properties/fields, method returns or method parameters. If you want to restrict de within methods, take a look at the "Taking it a step further" section.</p>
+<p>defAllowed - If the <code>def</code> keyword is allowed for properties/fields, method returns or method parameters. If you want to restrict <code>def</code> within methods, take a look at the "Taking it a step further" section.</p>
 </li>
 <li>
 <p>skipDefaultPackage - If set true this will whitelist any classes in the default package.</p>
@@ -738,7 +756,7 @@ the compilation checks. To customize the location of the compiler script you can
 <a href="http://docs.groovy-lang.org/latest/html/api/org/codehaus/groovy/control/customizers/SecureASTCustomizer.html">SecureASTCustomizer JavaDoc</a></p>
 </div>
 <div class="paragraph">
-<p>While a custom compiler script can provide functionality similar to this plugin, for compile static, it&#8217;s not at flexible, and your
+<p>While a custom compiler script can provide functionality similar to this plugin, for compile static, it&#8217;s not as flexible, and your
 mileage may vary.</p>
 </div>
 </div>
@@ -750,6 +768,37 @@ mileage may vary.</p>
 <p>The Enterprise Groovy plugin will provide a Gradle task to bring up a Groovy Console, if the project doesn&#8217;t already
 provide one. This can be good for playing with Groovy code, and more importantly, using the AST Browser.
 The AST browser, allows you to see, what the Groovy Compiler does to your code, making it less magical.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="console_no_error.png" alt="console no error">
+</div>
+</div>
+<div class="paragraph">
+<p>AS of the 1.0 release, the console doesn&#8217;t have access to the full conventions configuration, because of limitations
+between the Groovy Console, and the AST transform that drives Enterprise Groovy. For the Groovy Console it has
+access to the following configurations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>disable - Turning Enterprise Groovy on or off for the console.</p>
+</li>
+<li>
+<p>whiteListScripts - This is overridden to be false, because everything you do in the Groovy Console is a script with no target build directory.</p>
+</li>
+<li>
+<p>disableDynamicCompile - This will determine if you can use <code>@CompileDynamic</code> or <code>@CompileStatic(TypeCheckingMode.SKIP)</code>, in the console.</p>
+</li>
+<li>
+<p>defAllowed- This will determine if you can use <code>def</code> in the console.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="console_error.png" alt="console error">
+</div>
 </div>
 </div>
 </div>
@@ -832,6 +881,10 @@ special thanks, to the people, whose work made this plugin possible:</p>
 <li>
 <p>Anyone who also worked on @CompileStatic, while I only saw Cédric, and Paul, I didn&#8217;t do an exhaustive search of all the support classes.</p>
 </li>
+<li>
+<p>Anton Pryamostanov who tested out the earlier versions of Enterprise Groovy(RC1-RC4), which helped me figure out some gradle and configuration
+issues.</p>
+</li>
 </ul>
 </div>
 </div>
@@ -839,8 +892,8 @@ special thanks, to the people, whose work made this plugin possible:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 1.0.RC4<br>
-Last updated 2019-02-16 10:42:37 -05:00
+Version 1.0<br>
+Last updated 2019-02-17 11:14:57 -05:00
 </div>
 </div>
 </body>
