@@ -154,7 +154,7 @@ bintray {
         userOrg = getPropertyOrUseDefault("bintrayUser", "fake_user")
         desc = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
         licenses = ['Apache-2.0']
-        labels = ['gradle', 'plugin', 'groovy', 'enterprise', 'compileStatic', 'static compiliation', 'static']
+        labels = ['gradle', 'plugin', 'groovy', 'grails', 'micronaut', 'enterprise', 'compileStatic', 'static compilation', 'static']
         websiteUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin'
         issueTrackerUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin/issues'
         vcsUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin.git'
@@ -175,7 +175,7 @@ gradlePlugin {
 pluginBundle {
     website = 'https://virtualdogbert.github.io/enterprise-groovy-plugin/'
     vcsUrl = 'https://github.com/virtualdogbert/enterprise-groovy-plugin.git'
-    tags = ['groovy', 'enterprise', 'compileStatic', 'static compiliation', 'static']
+    tags = ['groovy', 'grails', 'micronaut', 'enterprise', 'compileStatic', 'static compilation', 'static']
 }
 
 def asciidoctorAttributes = [
