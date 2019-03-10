@@ -1,6 +1,7 @@
 == Getting Started
 
 To get started, install the Enterprise Groovy plugin, in your `build.grade`:
+
 Using the plugins DSL:
 [source,groovy]
 ----

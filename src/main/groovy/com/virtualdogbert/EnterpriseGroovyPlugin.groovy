@@ -100,7 +100,6 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
                     systemProperties([
                             'enterprise.groovy.console': 'true',
                             'enterprise.groovy.disable': config.disable,
-                            'enterprise.groovy.whiteListScripts': config.whiteListScripts,
                             'enterprise.groovy.disableDynamicCompile': config.disableDynamicCompile,
                             'enterprise.groovy.defAllowed': config.defAllowed,
                     ])

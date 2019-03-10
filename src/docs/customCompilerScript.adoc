@@ -16,5 +16,5 @@ http://mrhaki.blogspot.com/2016/01/groovy-goodness-customising-groovy.html[Groov
 Also check out the JavaDoc for the SecureASTCustomizer:
 http://docs.groovy-lang.org/latest/html/api/org/codehaus/groovy/control/customizers/SecureASTCustomizer.html[SecureASTCustomizer JavaDoc]
 
-While a custom compiler script can provide functionality similar to this plugin, for compile static, it's not at flexible, and your
+While a custom compiler script can provide functionality similar to this plugin, for compile static, it's not as flexible, and your
 mileage may vary.

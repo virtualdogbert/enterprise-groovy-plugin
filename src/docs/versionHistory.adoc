@@ -1,4 +1,8 @@
 == Version History
+* 1.0
+** Fixed loop hole for disabling dynamic compilation by disallowing `@CompileStatic(TypeCheckingMode.SKIP)` in addition to `@CompileDynamic`.
+** Getting more of the configuration to the console task.
+** Fixing some typos, and updating documentation.
 * 1.0.RC4
 ** Fixed issue getting config to the AST transform, using a custom compiler script.
 ** Fixed issue, where Enterprise Groovy becomes a transient dependency.
