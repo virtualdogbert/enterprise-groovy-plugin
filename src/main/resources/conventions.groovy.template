@@ -19,7 +19,7 @@
 
 Map conventions = [
         disable                     : false,
-        whiteListScripts            : false,
+        whiteListScripts            : true,
 
         disableDynamicCompile       : false,
         dynamicCompileWhiteList     : [],
