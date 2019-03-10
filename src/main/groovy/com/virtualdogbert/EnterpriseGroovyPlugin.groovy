@@ -86,8 +86,24 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
                     group = 'enterprise groovy'
 
                     main = 'groovy.ui.Console'
+                    GroovyShell shell = new GroovyShell()
+                    shell.evaluate(project.file('conventions.groovy'))
 
-                    systemProperties(['enterprise.groovy.console': 'true'])
+                    String conventions = System.getProperty('enterprise.groovy.conventions')
+                           ConfigSlurper configSlurper = new ConfigSlurper()
+                           Map config = [:]
+
+                           if (conventions) {
+                               config = (ConfigObject) configSlurper.parse(conventions)?.conventions
+                           }
+
+                    systemProperties([
+                            'enterprise.groovy.console': 'true',
+                            'enterprise.groovy.disable': config.disable,
+                            'enterprise.groovy.whiteListScripts': config.whiteListScripts,
+                            'enterprise.groovy.disableDynamicCompile': config.disableDynamicCompile,
+                            'enterprise.groovy.defAllowed': config.defAllowed,
+                    ])
 
                     project.repositories {
                         jcenter()
