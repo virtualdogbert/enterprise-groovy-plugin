@@ -7,3 +7,5 @@ special thanks, to the people, whose work made this plugin possible:
 * Paul King One of the biggest contributors to the Groovy Language, who also has worked on Groovy's static compilation.
 * Hubert Klein Ikkink(AKA mrhaki) A major player in the Groovy Community, with this tutorial blog posts: `http://mrhaki.blogspot.com`
 * Anyone who also worked on @CompileStatic, while I only saw Cédric, and Paul, I didn't do an exhaustive search of all the support classes.
+* Anton Pryamostanov who tested out the earlier versions of Enterprise Groovy(RC1-RC4), which helped me figure out some gradle and configuration
+issues.
