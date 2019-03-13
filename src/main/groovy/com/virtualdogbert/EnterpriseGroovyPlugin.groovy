@@ -111,7 +111,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
                     Configuration consoleRuntime = project.configurations.create("consoleRuntime")
                     consoleRuntime.dependencies.add(project.dependencies.localGroovy())
-                    consoleRuntime.dependencies.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0"))
+                    consoleRuntime.dependencies.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.1"))
 
                     classpath = project.sourceSets.main.runtimeClasspath + project.files(consoleRuntime.asPath)
                 }

@@ -6,7 +6,7 @@ Using the plugins DSL:
 [source,groovy]
 ----
 plugins {
-  id "enterprise.groovy.plugin" version "1.0"
+  id "enterprise.groovy.plugin" version "1.0.1"
 }
 ----
 Using legacy plugin application:
@@ -19,7 +19,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "com.virtualdogbert:enterprise-groovy-plugin:1.0"
+    classpath "com.virtualdogbert:enterprise-groovy-plugin:1.0.1"
   }
 }
 ----
