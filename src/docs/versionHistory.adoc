@@ -1,6 +1,6 @@
 == Version History
 * 1.0.1
-* Fixed an issue with a transient dependency when used in a library, that was retrieved with an @Grab.
+** Fixed an issue with a transient dependency when used in a library, that was retrieved with an @Grab.
 * 1.0
 ** Fixed loop hole for disabling dynamic compilation by disallowing `@CompileStatic(TypeCheckingMode.SKIP)` in addition to `@CompileDynamic`.
 ** Getting more of the configuration to the console task.
