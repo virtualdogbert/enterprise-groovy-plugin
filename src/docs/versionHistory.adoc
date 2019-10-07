@@ -1,4 +1,6 @@
 == Version History
+* 1.0.3
+** Updated some error handing. Has some issues with 1.0.2, so just bumped to 1.0.3
 * 1.0.1
 ** Fixed an issue with a transient dependency when used in a library, that was retrieved with an @Grab.
 * 1.0
