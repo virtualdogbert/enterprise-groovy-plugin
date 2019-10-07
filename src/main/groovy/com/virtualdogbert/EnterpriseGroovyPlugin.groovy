@@ -64,7 +64,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
             project.getGradle().addListener(new DependencyResolutionListener() {
                 @Override
                 void beforeResolve(ResolvableDependencies resolvableDependencies) {
-                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.2"))
+                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.3"))
                     project.getGradle().removeListener(this)
                 }
 
@@ -111,7 +111,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
                     Configuration consoleRuntime = project.configurations.create("consoleRuntime")
                     consoleRuntime.dependencies.add(project.dependencies.localGroovy())
-                    consoleRuntime.dependencies.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.2"))
+                    consoleRuntime.dependencies.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.3"))
 
                     classpath = project.sourceSets.main.runtimeClasspath + project.files(consoleRuntime.asPath)
                 }
