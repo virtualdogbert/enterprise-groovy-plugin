@@ -1,4 +1,6 @@
 == Version History
+* 1.0.4
+** Providing proper fall backs for if the conventions aren't present or if you set an override and it is not present.
 * 1.0.3
 ** Updated some error handing. Has some issues with 1.0.2, so just bumped to 1.0.3
 * 1.0.1

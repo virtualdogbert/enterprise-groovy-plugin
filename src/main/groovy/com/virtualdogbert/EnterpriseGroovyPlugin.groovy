@@ -72,11 +72,13 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
                 void afterResolve(ResolvableDependencies resolvableDependencies) {}
             })
 
-            if (project.hasProperty('compilationScript')) {
+            File configFile = project.file('conventions.groovy')
+
+            if (project.hasProperty('compilationScript') && project.file(project.compilationScript).exists()) {
                 // Add the configuration script file to the compiler options.
                 project.compileGroovy.groovyOptions.configurationScript = project.file(project.compilationScript)
-            } else {
-                project.compileGroovy.groovyOptions.configurationScript = project.file('conventions.groovy')
+            } else if(configFile.exists()){
+                project.compileGroovy.groovyOptions.configurationScript = configFile
             }
 
             if (!project.hasProperty('console')) {
@@ -87,22 +89,34 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
 
                     main = 'groovy.ui.Console'
                     GroovyShell shell = new GroovyShell()
-                    shell.evaluate(project.file('conventions.groovy'))
 
-                    String conventions = System.getProperty('enterprise.groovy.conventions')
-                           ConfigSlurper configSlurper = new ConfigSlurper()
-                           Map config = [:]
 
-                           if (conventions) {
-                               config = (ConfigObject) configSlurper.parse(conventions)?.conventions
-                           }
+                    if (configFile.exists()) {
 
-                    systemProperties([
-                            'enterprise.groovy.console': 'true',
-                            'enterprise.groovy.disable': config.disable,
-                            'enterprise.groovy.disableDynamicCompile': config.disableDynamicCompile,
-                            'enterprise.groovy.defAllowed': config.defAllowed,
-                    ])
+                        shell.evaluate(configFile)
+
+                        String conventions = System.getProperty('enterprise.groovy.conventions')
+                        ConfigSlurper configSlurper = new ConfigSlurper()
+                        Map config = [:]
+
+                        if (conventions) {
+                            config = (ConfigObject) configSlurper.parse(conventions)?.conventions
+                        }
+
+                        systemProperties([
+                                'enterprise.groovy.console'              : true,
+                                'enterprise.groovy.disable'              : config.disable,
+                                'enterprise.groovy.disableDynamicCompile': config.disableDynamicCompile,
+                                'enterprise.groovy.defAllowed'           : config.defAllowed,
+                        ])
+                    } else {
+                        systemProperties([
+                                'enterprise.groovy.console'              : true,
+                                'enterprise.groovy.disable'              : false,
+                                'enterprise.groovy.disableDynamicCompile': false,
+                                'enterprise.groovy.defAllowed'           : true
+                        ])
+                    }
 
                     project.repositories {
                         jcenter()
