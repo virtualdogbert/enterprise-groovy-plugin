@@ -19,7 +19,7 @@
 
 plugins {
     id 'java-gradle-plugin'
-    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'com.gradle.plugin-publish' version '0.11.0'
     id 'groovy'
     id 'maven-publish'
     id "com.jfrog.bintray" version "1.8.4"
@@ -27,7 +27,7 @@ plugins {
 }
 
 group = 'com.virtualdogbert'
-version = '1.0.4'
+version = '1.0.5'
 description = 'The Enterprise Groovy Plugin provides static compilation by default, and optional enforcement.'
 
 configurations {
