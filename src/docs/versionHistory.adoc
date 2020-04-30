@@ -1,4 +1,6 @@
 == Version History
+* 1.0.5
+** demus-nine submitted a fix for an errant space in one of the template filenames names.
 * 1.0.4
 ** Providing proper fall backs for if the conventions aren't present or if you set an override and it is not present.
 * 1.0.3
