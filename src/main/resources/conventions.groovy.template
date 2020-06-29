@@ -28,6 +28,7 @@ Map conventions = [
         limitCompileStaticExtensions: false,
 
         defAllowed                  : true,
+        allowedSuppressions         : [],
         skipDefaultPackage          : false
 ]
 
