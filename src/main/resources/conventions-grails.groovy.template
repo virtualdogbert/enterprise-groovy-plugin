@@ -42,6 +42,7 @@ Map conventions = [
 
         limitCompileStaticExtensions: false,
         defAllowed                  : false, //For controllers you can use Object in place of def, and in Domains add Closure to constraints/mappings closure fields.
+        allowedSuppressions         : [],
         skipDefaultPackage          : true, //For GSP files
 ]
 

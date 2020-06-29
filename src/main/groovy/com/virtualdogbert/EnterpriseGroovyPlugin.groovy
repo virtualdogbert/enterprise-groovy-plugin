@@ -33,10 +33,11 @@ import org.gradle.api.tasks.compile.GroovyCompile
  */
 class EnterpriseGroovyPlugin implements Plugin<Project> {
 
-    static final  String      conventionsFile       = "conventions.groovy.template"
-    static final  String      GrailsConventionsFile = "conventions-grails.groovy.template"
-    static final  String      conventionsOut        = "conventions.groovy"
-    private final ClassLoader loader                = getClass().getClassLoader()
+    static final  String      conventionsFile         = 'conventions.groovy.template'
+    static final  String      GrailsConventionsFile   = 'conventions-grails.groovy.template'
+    static final  String      conventionsOut          = 'conventions.groovy'
+    private static final      enterpriseGroovyVersion = '1.0.4'
+    private final ClassLoader loader                  = getClass().getClassLoader()
 
     void apply(Project project) {
         //Adds a task to setup the Enterprise Groovy conventions, coping over the default conventions.groovy.
@@ -64,7 +65,7 @@ class EnterpriseGroovyPlugin implements Plugin<Project> {
             project.getGradle().addListener(new DependencyResolutionListener() {
                 @Override
                 void beforeResolve(ResolvableDependencies resolvableDependencies) {
-                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:1.0.3"))
+                    compileDeps.add(project.getDependencies().create("com.virtualdogbert:enterprise-groovy:$enterpriseGroovyVersion"))
                     project.getGradle().removeListener(this)
                 }
 
